@@ -1,6 +1,7 @@
 var sleepCheckInterval
 var lastSleepCheck = false
-var sleepCheckTime = 3e3
+var SLEEP_CHECK_INTERVAL = 10e3
+var NUM_MISSABLE_INTERVALS = 3
 var EE = require('events')
 var emitter = new EE()
 
@@ -11,10 +12,10 @@ module.exports = function (cb) {
     // setup interval
     sleepCheckInterval = setInterval(function () {
       var t = Date.now()
-      if (lastSleepCheck && (t - lastSleepCheck) > sleepCheckTime*3)
-        emitter.emit('wakeup') // missed 3 checks, let's run the callbacks 
+      if (lastSleepCheck && (t - lastSleepCheck) > SLEEP_CHECK_INTERVAL*NUM_MISSABLE_INTERVALS)
+        emitter.emit('wakeup') // missed NUM_MISSABLE_INTERVALS checks, let's run the callbacks 
       lastSleepCheck = t
-    }, sleepCheckTime)
+    }, SLEEP_CHECK_INTERVAL)
   }
   
   // unreference the timer so that the program can close
