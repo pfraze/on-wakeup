@@ -1,6 +1,6 @@
 {
   "name": "on-wakeup",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Watches for the computer to fall asleep and then triggers an event callback on wakeup",
   "main": "index.js",
   "scripts": {
